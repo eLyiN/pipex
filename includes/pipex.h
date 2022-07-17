@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:02:40 by aarribas          #+#    #+#             */
-/*   Updated: 2022/07/13 20:09:02 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/07/17 09:48:29 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,27 @@
 
 /* to get_next_line */
 # include "../get_next_line/get_next_line.h"
+
+/*t_list*/
+
+typedef struct s_pipex
+{
+	pid_t	pid1;
+	pid_t	pid2;
+	int		end[2];
+	int		infile_fd;
+	int		outfile_fd;
+	char	*envp_path;
+	char	**cmd_path;
+	char	**cmd_args;
+	char	*cmd;
+}			t_pipex;
+
+/*functions from libft*/
+char		*ft_substr(const char *s, unsigned int start, size_t len);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		**ft_split(char const *s, char c);
+int			ft_strncmp(const char *str1, const char *str2, size_t n);
+size_t		ft_strlen(const char *str);
 
 #endif
