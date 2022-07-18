@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:02:40 by aarribas          #+#    #+#             */
-/*   Updated: 2022/07/17 09:48:29 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/07/18 09:43:45 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PIPEX_H
 
 /* write, read, close access, pipe, dup, dup2, execve, fork */
+# include <fcntl.h>
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
@@ -29,9 +30,6 @@
 
 /* to perror */
 # include <stdio.h>
-
-/* to get_next_line */
-# include "../get_next_line/get_next_line.h"
 
 /*t_list*/
 
@@ -54,5 +52,11 @@ char		*ft_strjoin(char const *s1, char const *s2);
 char		**ft_split(char const *s, char c);
 int			ft_strncmp(const char *str1, const char *str2, size_t n);
 size_t		ft_strlen(const char *str);
+
+/*child functions*/
+void		child1_process(t_pipex pipex, char *av[], char *envp[]);
+void		child2_process(t_pipex pipex, char *av[], char *envp[]);
+char		*get_command(char **path, char *command);
+void		child_free(t_pipex *pipex);
 
 #endif

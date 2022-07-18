@@ -6,7 +6,7 @@
 #    By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/16 13:03:02 by aarribas          #+#    #+#              #
-#    Updated: 2022/07/17 09:48:35 by aarribas         ###   ########.fr        #
+#    Updated: 2022/07/18 09:34:49 by aarribas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FUNCTIONS_DIR	=	functions/
 FUNCTIONS		=	$(addprefix $(FUNCTIONS_DIR), $(FUNCTIONS_SRCS))
 OBJ_F			=	$(FUNCTIONS:.c=.o)
 
-MANDATORY_SRCS	=	pipex.c
+MANDATORY_SRCS	=	pipex.c child_process.c
 MANDATORY_DIR	=	mandatory/
 MANDATORY		=	$(addprefix $(MANDATORY_DIR), $(MANDATORY_SRCS))
 OBJ_M			=	$(MANDATORY:.c=.o)
@@ -29,7 +29,7 @@ OBJ_M			=	$(MANDATORY:.c=.o)
 #main
 NAME	=	pipex
 CC		=	gcc
-FLAGS	=	-Wall -Werror -Wextra
+FLAGS	=	-Wall -Werror -Wextra -g
 OBJS	=	$(SRCS:.c=.o)
 RM		=	rm -rf
 
@@ -42,12 +42,13 @@ $(NAME):		$(OBJ_F) $(OBJ_M)
 
 all:		$(NAME)
 
-clean:	@$(RM)	$(OBJ_F)
+clean:	
+		@$(RM)	$(OBJ_F)
 		@$(RM)	$(OBJ_M)
 		@echo -e "Objects file deleted"
 
 fclean:		clean
-			@$(RM) ($NAME)
+			@$(RM) $(NAME)
 			@echo -e "All deleted"		
 
 re:			fclean	all
