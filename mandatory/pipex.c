@@ -6,11 +6,26 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:16:00 by aarribas          #+#    #+#             */
-/*   Updated: 2022/07/18 09:44:29 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/07/31 10:10:30 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	parent_free(t_pipex *pipex)
+{
+	int	i;
+
+	i = 0;
+	close(pipex->infile_fd);
+	close(pipex->outfile_fd);
+	while (pipex->cmd_path[i])
+	{
+		free(pipex->cmd_path[i]);
+		i++;
+	}
+	free(pipex->cmd_path);
+}
 
 void	child_free(t_pipex *pipex)
 {
@@ -71,7 +86,6 @@ int	main(int ac, char *av[], char *envp[])
 	close(pipex.end[1]);
 	waitpid(pipex.pid1, NULL, 0);
 	waitpid(pipex.pid2, NULL, 0);
-	close(pipex.infile_fd);
-	close(pipex.outfile_fd);
+	parent_free(&pipex);
 	return (0);
 }
