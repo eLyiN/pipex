@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 09:33:55 by aarribas          #+#    #+#             */
-/*   Updated: 2022/07/18 09:45:16 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/07/31 10:22:07 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 void	child1_process(t_pipex pipex, char *av[], char *envp[])
 {
 	dup2(pipex.infile_fd, STDIN_FILENO);
-	if (pipex.infile_fd < 0)
-	{
-		perror("Dup2 error infile");
-		return ;
-	}
 	dup2(pipex.end[1], STDOUT_FILENO);
 	close(pipex.end[0]);
 	pipex.cmd_args = ft_split(av[2], ' ');
@@ -27,19 +22,13 @@ void	child1_process(t_pipex pipex, char *av[], char *envp[])
 	if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
 	{
 		child_free(&pipex);
-		perror("Execve fail on child1");
-		exit(1);
+		err("command not found");
 	}
 }
 
 void	child2_process(t_pipex pipex, char *av[], char *envp[])
 {
 	dup2(pipex.outfile_fd, STDOUT_FILENO);
-	if (pipex.outfile_fd < 0)
-	{
-		perror("Dup2 error outfile");
-		return ;
-	}
 	dup2(pipex.end[0], STDIN_FILENO);
 	close(pipex.end[1]);
 	pipex.cmd_args = ft_split(av[3], ' ');
@@ -47,7 +36,12 @@ void	child2_process(t_pipex pipex, char *av[], char *envp[])
 	if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
 	{
 		child_free(&pipex);
-		perror("Execve fail on child2");
-		exit(1);
+		err("command not found");
 	}
+}
+
+void	err(char *err)
+{
+	perror(err);
+	exit(1);
 }

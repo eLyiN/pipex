@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:02:40 by aarribas          #+#    #+#             */
-/*   Updated: 2022/07/18 09:43:45 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/07/31 10:18:13 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ void		child1_process(t_pipex pipex, char *av[], char *envp[]);
 void		child2_process(t_pipex pipex, char *av[], char *envp[]);
 char		*get_command(char **path, char *command);
 void		child_free(t_pipex *pipex);
+void		err(char *err);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:16:00 by aarribas          #+#    #+#             */
-/*   Updated: 2022/07/31 10:10:30 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/07/31 10:24:28 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ void	child_free(t_pipex *pipex)
 {
 	int	i;
 
-	i = -1;
-	while (pipex->cmd_args[i++])
+	i = 0;
+	while (pipex->cmd_args[i])
+	{
 		free(pipex->cmd_args[i]);
-	free(pipex->cmd_path);
+		i++;
+	}
+	free(pipex->cmd_args);
+	free(pipex->cmd);
 }
 
 char	*get_command(char **path, char *command)
@@ -71,9 +75,9 @@ int	main(int ac, char *av[], char *envp[])
 	pipex.infile_fd = open(av[1], O_RDONLY);
 	pipex.outfile_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (pipex.infile_fd < 0 || pipex.outfile_fd < 0)
-		return (1);
+		err("FD_ERROR");
 	if (pipe(pipex.end) < 0)
-		return (1);
+		err("PIPE_ERROR");
 	pipex.envp_path = path_cmd(envp);
 	pipex.cmd_path = ft_split(pipex.envp_path, ':');
 	pipex.pid1 = fork();
